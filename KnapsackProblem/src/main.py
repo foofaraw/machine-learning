@@ -3,6 +3,7 @@ from read import read
 from init_population import init_population
 from tournament import tournament
 from crossover import crossover
+from mutate import mutate
 from Models.Consts import *
 
 def main():
@@ -17,6 +18,7 @@ def main():
     winner1 = tournament(population, TOURNAMENT_SIZE)
     winner2 = tournament(population, TOURNAMENT_SIZE)
     child = crossover(winner1, winner2, CROSSOVER_RATE)
+    mutate(child, 1)
     print('Done')
 
 main()
