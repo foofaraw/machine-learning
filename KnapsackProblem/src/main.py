@@ -1,3 +1,4 @@
+from timeit import default_timer as timer
 from generate import generate
 from read import read
 from init_population import init_population
@@ -8,15 +9,18 @@ from Models.Population import Population
 from Models.Consts import *
 
 def main():
-    # generate(NUMBER_OF_ITEMS, MAX_WEIGHT, MAX_SIZE, FILE_NAME)
+    generate(NUMBER_OF_ITEMS, MAX_WEIGHT, MAX_SIZE, FILE_NAME)
     task = read(FILE_NAME)
     population = init_population(task, POPULATION_SIZE)
-    best = get_best_from_population(population)
-    # print(best.evaluate())
+
+    start = timer()
+    get_best_from_population(population)    
+    end = timer()
+    print(end - start)
     
 def get_best_from_population(population):
-    value_sum = 0
-    for i in range(ITERATIONS):
+    val_sum = 0
+    for _ in range(ITERATIONS):
         new_population = Population()
         while new_population.population_size < POPULATION_SIZE:
             parent1 = tournament(population, TOURNAMENT_SIZE)
@@ -25,8 +29,8 @@ def get_best_from_population(population):
             mutate(child, MUTATION_RATE)
             new_population.add_individual(child)
         population = new_population
-        value_sum += population.get_best_individual().evaluate()
-    print('Average best: ' + str(value_sum / 5))
+        val_sum += population.get_best_individual().evaluate()
+    print('Average best: ' + str(int(val_sum / ITERATIONS)))
     return population.get_best_individual()
 
 main()

@@ -13,12 +13,11 @@ def generate(n, w, s, output_file):
     rows = generate_rows(n, w, s)
     val_sum = np.sum(rows, axis=0)
     while not validate_weight(val_sum[0], w) and validate_size(val_sum[1], s):
-        print('Generating another set of rows...')
+        print('Constraints not met. Generating another set of rows...')
         rows = generate_rows(n, w, s)
         val_sum = np.sum(rows, axis=0)
     
     save_file(rows, output_file)
-    print('Generation done.')
 
 def validate_input(n, w, s):
     if (n < 1000 or n > 2000):
