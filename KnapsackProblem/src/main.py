@@ -12,9 +12,10 @@ def main():
     task = read(FILE_NAME)
     population = init_population(task, POPULATION_SIZE)
     best = get_best_from_population(population)
-    print(best.evaluate())
+    # print(best.evaluate())
     
 def get_best_from_population(population):
+    value_sum = 0
     for i in range(ITERATIONS):
         new_population = Population()
         while new_population.population_size < POPULATION_SIZE:
@@ -24,6 +25,8 @@ def get_best_from_population(population):
             mutate(child, MUTATION_RATE)
             new_population.add_individual(child)
         population = new_population
+        value_sum += population.get_best_individual().evaluate()
+    print('Average best: ' + str(value_sum / 5))
     return population.get_best_individual()
 
 main()
