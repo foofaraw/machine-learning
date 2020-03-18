@@ -6,7 +6,7 @@ class Task:
         self.weight_max = int(data[0][1])
         self.size_max = int(data[0][2])
         
-        # First row is headers, pop it
+        # First row is headers
         data.pop(0)
         
         self.w, self.s, self.c = [], [], []
