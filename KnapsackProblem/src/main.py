@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
 from timeit import default_timer as timer
 from generate import generate
 from read import read
@@ -11,17 +14,27 @@ from Models.Consts import *
 def main():
     # generate(NUMBER_OF_ITEMS, MAX_WEIGHT, MAX_SIZE, FILE_NAME)
     task = read(FILE_NAME)
-
-    for j in range(5):
-        print('########## NEW RUN ##########')
-        population = init_population(task, POPULATION_SIZE)
-        start = timer()
-        best = get_best_from_population(population)
-        end = timer()
-        print('# Execution time: ' + str(end - start))
+    run_task(task) 
     
+def run_task(task):    
+    print('Population size: ' + str(POPULATION_SIZE))
+    print('Number of generations: ' + str(ITERATIONS))
+
+    start = timer()
+    population = init_population(task, POPULATION_SIZE)
+    best = get_best_from_population(population)
+    end = timer()
+    print('Execution time: ' + str(end - start))
+
+    plt.plot(best)
+    plt.xlabel('GENERATION')
+    plt.ylabel('BEST INDIVIDUAL')
+    plt.show()
+
+
+# Returns np.array 1xITERATIONS of best individual in each generation
 def get_best_from_population(population):
-    val_sum = 0
+    result = np.empty(ITERATIONS)
     for i in range(ITERATIONS):
         new_population = Population()
         while new_population.population_size < POPULATION_SIZE:
@@ -30,9 +43,10 @@ def get_best_from_population(population):
             child = crossover(parent1, parent2, CROSSOVER_RATE)
             mutate(child, MUTATION_RATE)
             new_population.add_individual(child)
+            print('.', end='')
         population = new_population
-        best_in_generation = population.get_best_individual().evaluate()
-        print('Best in ' + str(i + 1) + ' generation: ' + str(best_in_generation))
-    return population.get_best_individual()
+        result[i] = population.get_best_individual().evaluate()
+        print('-', end='')
+    return result
 
 main()
