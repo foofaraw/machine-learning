@@ -7,29 +7,18 @@ class Sudoku:
         # From 0 to 9, 0 being train set with given solutions.
         self.difficulty = data_row[1]
 
-        # Array of 9 rows, each row is an array representing one box from Sudoku grid
-        # If 0, it needs filling
+        # 9 rows, each representing one box
         self.grid = self.create_grid(data_row[2])
 
         # Correctly solved grid for Sudokus with difficulty 0
         self.solution = self.create_solution(data_row[3])
-
+    # 012345678 912345678 9123456789
     def create_grid(self, row):
-        grid = []
-        for i in range(9):
-            box = np.zeros(9)
-            for j in range(9):
-                if row[i + j] == '.':
-                    box[j] = 0
-                else:
-                    box[j] = int(row[i + j])
-            grid.append(box)
-        return np.array(grid, dtype=np.int8)
+        row = row.replace('.', '0')
+        grid = [row[i:i + 9] for i in range(0, len(row), 9)]
+        return np.array(grid)
 
     def create_solution(self, solution_row):
-        if (solution_row):
-            return self.create_grid(solution_row)
-        else:
-            return 0
+        return self.create_grid(solution_row) if solution_row else 0
 
     
