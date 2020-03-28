@@ -12,13 +12,17 @@ class Sudoku:
 
         # Correctly solved grid for Sudokus with difficulty 0
         self.solution = self.create_solution(data_row[3])
-    # 012345678 912345678 9123456789
-    def create_grid(self, row):
-        row = row.replace('.', '0')
-        grid = [row[i:i + 9] for i in range(0, len(row), 9)]
+
+    def create_grid(self, data_row):
+        data_row = data_row.replace('.', '0')
+        row_int = [int(i) for i in data_row]
+        grid = [row_int[i:i + 9] for i in range(0, len(row_int), 9)]
         return np.array(grid)
 
     def create_solution(self, solution_row):
         return self.create_grid(solution_row) if solution_row else 0
+
+    def is_solved(self):
+        return np.array_equal(self.grid, self.solution)
 
     
