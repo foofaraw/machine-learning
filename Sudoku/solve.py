@@ -1,17 +1,16 @@
 import numpy as np
 
-def solve(grid, domain):
+def solve(grid):
     find = find_empty(grid)
     if not find:
         return True
     else:
         row, col = find
-
-    for i in domain[0][3][domain[0][3] != 0]:
+    
+    for i in range(1, 10):
         if is_valid(grid, i, row, col):
             grid[row][col] = i
-
-            if solve(grid, domain):
+            if solve(grid):
                 return True
 
             grid[row][col] = 0

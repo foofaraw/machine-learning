@@ -10,9 +10,6 @@ class Sudoku:
         # 9 rows, each representing one box
         self.grid = self.create_grid(data_row[2])
 
-        # each field has a domain [1, 9]
-        self.domain = self.create_domains()
-
         # Correctly solved grid for Sudokus with difficulty 0
         self.solution = self.create_solution(data_row[3])
 
@@ -24,10 +21,6 @@ class Sudoku:
 
     def create_solution(self, solution_row):
         return self.create_grid(solution_row) if solution_row else 0
-
-    def create_domains(self):
-        domain = [1,2,3,4,5,6,7,8,9]
-        return np.full((9, 9, 9), domain)
 
     def is_solved(self):
         return np.array_equal(self.grid, self.solution)

@@ -13,7 +13,7 @@ def main():
     sudokus = sudokus[:4]
     for sudoku in sudokus:
         start = timer()
-        solve(sudoku.grid, sudoku.domain)
+        solve(sudoku.grid)
         print(str(sudoku.is_solved()))
         end = timer()
         times.append(end - start)
