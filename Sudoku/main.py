@@ -5,16 +5,16 @@ from timeit import default_timer as timer
 from Models.Sudoku import Sudoku
 from solve import *
 
-
 def main():
     data = np.genfromtxt('Data/Sudoku.csv', delimiter=';', names=True, dtype=('>i4', '>i4', '|U81', '|U81'))
     sudokus = [Sudoku(i) for i in data]
 
     times = []
-    sudokus = sudokus[:5]
+    sudokus = sudokus[:4]
     for sudoku in sudokus:
         start = timer()
-        solve(sudoku.grid)
+        solve(sudoku.grid, sudoku.domain)
+        print(str(sudoku.is_solved()))
         end = timer()
         times.append(end - start)
 

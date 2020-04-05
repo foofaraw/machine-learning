@@ -1,17 +1,17 @@
 import numpy as np
 
-def solve(grid):
+def solve(grid, domain):
     find = find_empty(grid)
     if not find:
         return True
     else:
         row, col = find
 
-    for i in range(1, 10):
+    for i in domain[0][3][domain[0][3] != 0]:
         if is_valid(grid, i, row, col):
             grid[row][col] = i
 
-            if solve(grid):
+            if solve(grid, domain):
                 return True
 
             grid[row][col] = 0
@@ -36,9 +36,7 @@ def is_valid(grid, num, row, col):
             return False
 
     # Check box
-    box_x = (col // 3) * 3
-    box_y = (row // 3) * 3
-
+    box_x, box_y = (col // 3) * 3, (row // 3) * 3
     for i in range(box_y, box_y + 3):
         for j in range(box_x, box_x + 3):
             if grid[i][j] == num and (i, j) != (row, col):
