@@ -11,6 +11,7 @@ namespace CrosswordPuzzle
         {
             var puzzle = CreatePuzzle(0);
             PrintBoard(puzzle.board);
+            Solve(puzzle);
         }
 
         
@@ -56,10 +57,8 @@ namespace CrosswordPuzzle
                     if (board[i, n] == 0)
                     {
                         var room = new ArraySegment<char>(saveRow, n, word.Length);
-                        if (room.Any(i => i != 0))
-                        {
-
-                        }
+                        var newRow = FitWordIntoSpace(room, word);
+                        SetRow(ref board, newRow, i);
                     }
                 }
             }
@@ -67,11 +66,40 @@ namespace CrosswordPuzzle
             return board;
         }
 
+        static char[] FitWordIntoSpace(ArraySegment<char> space, string word)
+        {
+            char[] temp = space.ToArray();
+            for (int i = 0; i < word.Length; i++)
+            {
+                if (space[i] == 0 || space[i] == word[i])
+                {
+                    space[i] = word[i];
+                }
+                else
+                {
+                    return temp;
+                }
+            }
+            return space.ToArray();
+        }
+
         static char[] GetColumn(char[,] arr, int col) 
             => Enumerable.Range(0, arr.GetLength(0)).Select(x => arr[x, col]).ToArray();
 
         static char[] GetRow(char[,] arr, int row) 
             => Enumerable.Range(0, arr.GetLength(1)).Select(x => arr[row, x]).ToArray();
+
+        static void SetColumn(ref char[,] arr, char[] col, int index)
+        {
+            for (int i = 0; i < arr.GetLength(0); i++)
+                arr[i, index] = col[i];
+        }
+
+        static void SetRow(ref char[,] arr, char[] row, int index)
+        {
+            for (int i = 0; i < arr.GetLength(1); i++)
+                arr[index, i] = row[i];
+        }
 
         static Puzzle CreatePuzzle(int n)
         {
