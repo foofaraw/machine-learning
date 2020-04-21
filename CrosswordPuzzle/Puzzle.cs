@@ -2,9 +2,9 @@
 
 namespace CrosswordPuzzle
 {
-    public struct Puzzle
+    public class Puzzle
     {
-        public Puzzle(char[,] board, HashSet<string> words)
+        public Puzzle(char[,] board, List<string> words)
         {
             this.board = board;
             this.words = words;
@@ -14,7 +14,7 @@ namespace CrosswordPuzzle
         /// Read with grid[row, col]
         /// </summary>
         public char[,] board;
-        public HashSet<string> words;
+        public List<string> words;
 
         public bool IsSolved()
         {
