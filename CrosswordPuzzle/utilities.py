@@ -14,3 +14,7 @@ def get_board_from_file(path):
       board.append(list(line)[:-1])
       line = f.readline()
   return board
+
+def get_words_from_file(path):
+  with open(path, 'r') as f:
+    return f.read().splitlines()

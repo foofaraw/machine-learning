@@ -1,4 +1,3 @@
-
 import os
 import sys
 import argparse
@@ -17,8 +16,7 @@ def main():
   
   words = []
   if (os.path.exists(args.wordsPath)):
-    with open(args.wordsPath, 'r') as f:
-      words = f.read().splitlines()
+    words = utilities.get_words_from_file(args.wordsPath)
   else:
     print('Invalid path to words')
     return
@@ -66,7 +64,6 @@ def get_possible_slots(board, word):
       if vertical_slot and i < rows - length + 1:
         yield (i, j, 1)
 
-
 def fill(board, word, startLocation):
   i, j, axis = startLocation
   length = len(word)
@@ -76,7 +73,6 @@ def fill(board, word, startLocation):
   else:
     for k in range(length):
       board[i + k][j] = word[k]
-
 
 def rollback(board, word, startLocation):
   i, j, axis = startLocation
