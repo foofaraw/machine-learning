@@ -33,14 +33,13 @@ def solve(board, words):
     solved = True
     return
 
-  word = words.pop()
-
-  for direction in get_possible_slots(board, word):
-    fill(board, word, direction)
-    solve(board, words)
-    rollback(board, word, direction)
-
-  words.append(word)
+  if not solved:
+    word = words.pop()
+    for direction in get_possible_slots(board, word):
+      fill(board, word, direction)
+      solve(board, words)
+      rollback(board, word, direction)
+    words.append(word)
 
 def get_possible_slots(board, word):
   length = len(word)
